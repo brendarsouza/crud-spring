@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,13 +22,16 @@ import lombok.Data;
 @Where(clause = "status = 'Ativo'")
 public class Course {
 
+    public Course() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("_id")
     private Long id;
 
     @NotBlank
-    @Nonnull
+    @NotNull
     @Length(min = 5, max = 100)
     @Column(length = 100, nullable = false)
     private String name;

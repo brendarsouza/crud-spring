@@ -14,6 +14,10 @@ public class CrudSpringApplication {
 		SpringApplication.run(CrudSpringApplication.class, args);
 	}
 
+	/**
+	 * @param courseRepository
+	 * @return
+	 */
 	@Bean
 	CommandLineRunner initDatabase(CourseRepository courseRepository) {
 		return args -> {
