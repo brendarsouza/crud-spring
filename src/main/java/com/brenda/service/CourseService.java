@@ -2,11 +2,9 @@ package com.brenda.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.brenda.dto.CourseDTO;
 import com.brenda.dto.mapper.CourseMapper;
-import com.brenda.enums.Category;
 import com.brenda.exception.RecordNotFoundException;
 import com.brenda.repository.CourseRepository;
 
@@ -37,7 +35,7 @@ public class CourseService {
         .collect(Collectors.toList());
     }
 
-    public CourseDTO findById(@PathVariable @NotNull @Positive Long id) {
+    public CourseDTO findById(@NotNull @Positive Long id) {
         return courseRepository.findById(id).map(courseMapper::toDTO)
             .orElseThrow(() -> new RecordNotFoundException(id));
     }
@@ -46,16 +44,16 @@ public class CourseService {
         return courseMapper.toDTO(courseRepository.save(courseMapper.toEntity(courseDTO)));
     }
 
-    public CourseDTO update(@PathVariable @NotNull @Positive Long id, @Valid @NotNull CourseDTO courseDTO) {
+    public CourseDTO update(@NotNull @Positive Long id, @Valid @NotNull CourseDTO courseDTO) {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(courseDTO.name());
-                    recordFound.setCategory(Category.FRONTEND);
+                    recordFound.setCategory(courseMapper.convertCategoryValue(courseDTO.category()));
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
-    public void delete(@PathVariable @NotNull @Positive Long id) {
+    public void delete(@NotNull @Positive Long id) {
         courseRepository.delete(courseRepository.findById(id)
             .orElseThrow(() -> new RecordNotFoundException(id)));
     }
