@@ -1,5 +1,6 @@
 package com.brenda;
 
+import com.brenda.enums.Category;
 import com.brenda.model.Course;
 import com.brenda.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +25,7 @@ public class CrudSpringApplication {
 			courseRepository.deleteAll();
 			Course c = new Course();
 			c.setName("Angular com Spring");
-			c.setCategory("FrontEnd");
+			c.setCategory(Category.FRONTEND);
 
 			courseRepository.save(c);
 		};

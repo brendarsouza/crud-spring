@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.brenda.dto.CourseDTO;
 import com.brenda.dto.mapper.CourseMapper;
+import com.brenda.enums.Category;
 import com.brenda.exception.RecordNotFoundException;
 import com.brenda.repository.CourseRepository;
 
@@ -49,7 +50,7 @@ public class CourseService {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(courseDTO.name());
-                    recordFound.setCategory(courseDTO.category());
+                    recordFound.setCategory(Category.FRONTEND);
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
